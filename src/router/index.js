@@ -7,20 +7,25 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Manage',
+    name: '首页',
     component: () => import('../views/Manage.vue'),
-    redirect: "/manage/home",
-    meta:{title:"首页"},
+    redirect: "/home",
     children:[
-      {path: 'manage/home', name: 'Home',component: () => import('../views/Home.vue'),},
-      {path: 'manage/user', name: 'User',meta:{title:"用户管理"}, component: () => import('../views/User.vue'),}
+      {path: '/home', name: '',component: () => import('../views/Home.vue'),},
+      {path: '/user', name: '用户管理', component: () => import('../views/User.vue'),},
+      {path: '/Person', name: '个人信息', component: () => import('../views/Person.vue'),}
     ]
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('../views/Login.vue')
-  }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },
 ]
 
 const router = new VueRouter({

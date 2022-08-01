@@ -45,13 +45,13 @@ export default {
           this.request.post('http://localhost:9090/login', this.user).then(
               res => {
                 if (res.code === '200') {
-                  console.log(res)
+                  console.log("---------->"+res)
                   localStorage.setItem("user",JSON.stringify(res.data)) // 存储用户信息到浏览器
                   this.$router.push("/")
                   this.$message.success("登录成功");
                 } else {
                   this.$message.error(res.msg);
-                  console.log(res)
+                  // console.log(res)
                 }
               }
           )
