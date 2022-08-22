@@ -13,7 +13,8 @@ const routes = [
     children:[
       {path: '/home', name: '',component: () => import('../views/Home.vue'),},
       {path: '/user', name: '用户管理', component: () => import('../views/User.vue'),},
-      {path: '/Person', name: '个人信息', component: () => import('../views/Person.vue'),}
+      {path: '/Person', name: '个人信息', component: () => import('../views/Person.vue'),},
+      {path: '/File', name: '文件管理', component: () => import('../views/File.vue'),}
     ]
   },
   {

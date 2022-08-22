@@ -24,7 +24,7 @@
     >
     <el-table-column type="selection" width="55"></el-table-column>
     <el-table-column type="index" label="排序" width="120"></el-table-column>
-    <el-table-column prop="id" label="ID" width="120"></el-table-column>
+<!--    <el-table-column prop="id" label="ID" width="120"></el-table-column>-->
     <el-table-column prop="username" label="用户名" width="120"></el-table-column>
     <el-table-column prop="nickname" label="昵称"></el-table-column>
     <el-table-column prop="email" label="邮箱"></el-table-column>
@@ -170,7 +170,7 @@ export default {
         }
       }).then(
           response => {
-            console.log('请求成功了', response)
+            // console.log('请求成功了', response)
             this.tableData = response.data.list
             this.total = response.data.total
           },

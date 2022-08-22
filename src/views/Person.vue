@@ -1,6 +1,15 @@
 <template>
   <el-card style="width: 500px;">
     <el-form label-width="80px" size="small">
+      <el-upload
+          class="avatar-uploader"
+          :action="'http://localhost:9090/file/upload'"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+      >
+        <img v-if="form.via" :src="form.via" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
       <el-form-item label="用户名">
         <el-input v-model="form.username" disabled autocomplete="off"></el-input>
       </el-form-item>
@@ -33,29 +42,50 @@ export default {
     }
   },
   created() {
-    this.request.get("http://localhost:9090/getUser/" + this.user.username).then(
-        res => {
-          if (res.code === '200') {
-            this.form = res.data
-            console.log(res)
-            localStorage.setItem("user", JSON.stringify(res.data))
-          }
-        }
-    )
+    // this.request.get("http://localhost:9090/getUser/" + this.user.username).then(
+    //     res => {
+    //       if (res.code === '200') {
+    //         this.form = res.data
+    //         console.log(res)
+    //         localStorage.setItem("user", JSON.stringify(res.data))
+    //       }
+    //     }
+    // )
+    this.getUser().then(res => {
+      // console.log(res)
+      console.log("111")
+      console.log(JSON.parse(localStorage.getItem("user")))
+      this.form = res
+    })
   },
   methods: {
+    async getUser() {
+        return (await this.request.get("http://localhost:9090/getUser/" + this.user.username)).data
+    },
     save() {
       this.request.post("http://localhost:9090/user/update", this.form).then(
           res => {
             if (res.code === '200'){
               this.$message.success("保存成功");
+
+              // 触发父级更新User的方法
+              // this.$emit("refreshUser")
+
+              // 更新浏览器存储的用户信息
+              this.getUser().then(res => {
+                res.token = JSON.parse(localStorage.getItem("user")).token
+                localStorage.setItem("user", JSON.stringify(res))
+                location.reload()
+              })
             }else {
-              this.$message.error("保存成功");
+              this.$message.error("保存失败");
             }
           }
       )
+    },
+    handleAvatarSuccess(res) {
+      this.form.via = res
     }
-
   }
 }
 </script>
@@ -68,10 +98,11 @@ export default {
 
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
-  border-radius: 6px;
+  /*border-radius: 6px;*/
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  border-radius: 50%;
 }
 
 .avatar-uploader .el-upload:hover {
@@ -91,5 +122,6 @@ export default {
   width: 138px;
   height: 138px;
   display: block;
+  border-radius: 50%;
 }
 </style>
