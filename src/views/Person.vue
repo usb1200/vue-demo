@@ -52,9 +52,7 @@ export default {
     //     }
     // )
     this.getUser().then(res => {
-      // console.log(res)
-      console.log("111")
-      console.log(JSON.parse(localStorage.getItem("user")))
+
       this.form = res
     })
   },
@@ -68,15 +66,9 @@ export default {
             if (res.code === '200'){
               this.$message.success("保存成功");
 
-              // 触发父级更新User的方法
-              // this.$emit("refreshUser")
+              // 触发父级更新User的方法,
+              this.$emit("refreshUser")
 
-              // 更新浏览器存储的用户信息
-              this.getUser().then(res => {
-                res.token = JSON.parse(localStorage.getItem("user")).token
-                localStorage.setItem("user", JSON.stringify(res))
-                location.reload()
-              })
             }else {
               this.$message.error("保存失败");
             }

@@ -3,6 +3,7 @@
     <div style="flex: 1; font-size: 18px">
       <span :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'" style="cursor: pointer"
             @click="collapse"></span>
+
       <el-breadcrumb separator-class="el-icon-arrow-right" style="display: inline-block;margin-left: 10px">
         <el-breadcrumb-item :to="{ path: item.path}" v-for="item in paths">{{item.name}}</el-breadcrumb-item>
       </el-breadcrumb>
@@ -32,12 +33,13 @@ export default {
   name: "Header",
   props: {
     isCollapse: Boolean,
-    collapse: Function
+    collapse: Function,
+    user:Object
   },
   data(){
     return {
       paths:[],
-      user:localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+      // user:localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
     }
   },
   methods:{
